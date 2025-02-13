@@ -72,20 +72,24 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
         .filter(drop => drop.y < 100);
 
       const catchCheck = updatedRaindrops.find(drop => {
-        // Adjust the catch detection for the new basket position (shifted right)
-        const isInBasketXRange = Math.abs(drop.x - (prev.characterPosition + 4)) < 10;
-        const isInBasketYRange = drop.y > 80 && drop.y < 90;
-        return isInBasketXRange && isInBasketYRange;
+        // Calculate basket position (80% to the right of character position)
+        const basketPosition = prev.characterPosition + 8; // Adjusted for the new 80% offset
+        const isInBasketXRange = Math.abs(drop.x - basketPosition) < 8;
+        const isInBasketYRange = drop.y > 75 && drop.y < 85; // Slightly adjusted catch zone
+        
+        const caught = isInBasketXRange && isInBasketYRange;
+        return caught;
       });
 
       if (catchCheck) {
         const newScore = prev.score + 1;
         const remainingDrops = updatedRaindrops.filter(d => d.id !== catchCheck.id);
         
+        // Only set isGameOver when exactly 5 drops are caught
         return {
           ...prev,
           score: newScore,
-          isGameOver: newScore >= 5,
+          isGameOver: newScore === 5,
           raindrops: remainingDrops,
         };
       }
