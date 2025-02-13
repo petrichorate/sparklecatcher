@@ -52,14 +52,14 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         {gameState.raindrops.map((drop: Raindrop) => (
           <motion.div
             key={drop.id}
-            className="absolute w-6 h-6"
+            className="absolute w-10 h-10" // Increased from w-6 h-6
             style={{
               left: `${drop.x}%`,
               top: 0,
             }}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
             transition={{ duration: 0.3 }}
           >
             <img 
@@ -72,8 +72,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       </AnimatePresence>
 
       <motion.div
-        className="absolute bottom-20 w-20 h-20"
-        style={{ left: `calc(${gameState.characterPosition}% - 40px)` }}
+        className="absolute bottom-20 w-32 h-32" // Increased from w-20 h-20
+        style={{ left: `calc(${gameState.characterPosition}% - 64px)` }} // Adjusted for new size
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
@@ -85,7 +85,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-12 h-12 object-contain"
+          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-16 h-16 object-contain" // Increased from w-12 h-12
         />
       </motion.div>
 

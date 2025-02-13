@@ -56,7 +56,7 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
       id: Date.now(),
       x: Math.random() * 100,
       y: -5,
-      speed: 2 + Math.random() * 2,
+      speed: 1 + Math.random() * 1, // Reduced from 2 + Math.random() * 2
     };
 
     setGameState(prev => ({
@@ -72,10 +72,9 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
         .filter(drop => drop.y < 100);
 
       const catchCheck = updatedRaindrops.find(drop => {
-        // Calculate basket position (80% to the right of character position)
-        const basketPosition = prev.characterPosition + 8; // Adjusted for the new 80% offset
+        const basketPosition = prev.characterPosition + 8;
         const isInBasketXRange = Math.abs(drop.x - basketPosition) < 8;
-        const isInBasketYRange = drop.y > 75 && drop.y < 85; // Slightly adjusted catch zone
+        const isInBasketYRange = drop.y > 75 && drop.y < 85;
         
         const caught = isInBasketXRange && isInBasketYRange;
         return caught;
@@ -85,7 +84,6 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
         const newScore = prev.score + 1;
         const remainingDrops = updatedRaindrops.filter(d => d.id !== catchCheck.id);
         
-        // Only set isGameOver when exactly 5 drops are caught
         return {
           ...prev,
           score: newScore,
