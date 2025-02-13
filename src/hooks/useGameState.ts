@@ -72,7 +72,8 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
         .filter(drop => drop.y < 100);
 
       const catchCheck = updatedRaindrops.find(drop => {
-        const isInBasketXRange = Math.abs(drop.x - prev.characterPosition) < 10;
+        // Adjust the catch detection for the new basket position (shifted right)
+        const isInBasketXRange = Math.abs(drop.x - (prev.characterPosition + 4)) < 10;
         const isInBasketYRange = drop.y > 80 && drop.y < 90;
         return isInBasketXRange && isInBasketYRange;
       });

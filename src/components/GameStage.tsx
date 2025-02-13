@@ -53,7 +53,11 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
           <motion.div
             key={drop.id}
             className="absolute w-6 h-6"
-            initial={{ y: -20, x: `${drop.x}%`, opacity: 0 }}
+            style={{
+              left: `${drop.x}%`,
+              top: 0,
+            }}
+            initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -81,7 +85,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-12 object-contain"
+          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-12 h-12 object-contain"
         />
       </motion.div>
 
