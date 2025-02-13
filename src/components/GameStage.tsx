@@ -36,6 +36,28 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  const renderRaindropCounter = () => {
+    return (
+      <div className="absolute top-4 left-4 flex gap-2">
+        {[...Array(5)].map((_, index) => (
+          <motion.div
+            key={index}
+            className="w-6 h-6"
+            initial={{ opacity: 0.33 }}
+            animate={{ opacity: index < gameState.score ? 1 : 0.33 }}
+            transition={{ duration: 0.2 }}
+          >
+            <img 
+              src={gameState.gameAssets.raindrop} 
+              alt="raindrop counter"
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div 
       className="relative w-full h-[80vh] overflow-hidden rounded-lg shadow-lg"
@@ -48,18 +70,20 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={() => setTouchStart(null)}
     >
+      {renderRaindropCounter()}
+
       <AnimatePresence>
         {gameState.raindrops.map((drop: Raindrop) => (
           <motion.div
             key={drop.id}
-            className="absolute w-10 h-10" // Increased from w-6 h-6
+            className="absolute w-10 h-10"
             style={{
               left: `${drop.x}%`,
               top: 0,
             }}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
-            exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
             transition={{ duration: 0.3 }}
           >
             <img 
@@ -72,8 +96,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       </AnimatePresence>
 
       <motion.div
-        className="absolute bottom-20 w-32 h-32" // Increased from w-20 h-20
-        style={{ left: `calc(${gameState.characterPosition}% - 64px)` }} // Adjusted for new size
+        className="absolute bottom-20 w-32 h-32"
+        style={{ left: `calc(${gameState.characterPosition}% - 64px)` }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
@@ -85,7 +109,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-16 h-16 object-contain" // Increased from w-12 h-12
+          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-16 h-16 object-contain"
         />
       </motion.div>
 
