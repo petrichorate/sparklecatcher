@@ -95,8 +95,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       </AnimatePresence>
 
       <motion.div
-        className="absolute bottom-20 w-32 h-32"
-        style={{ left: `calc(${gameState.characterPosition}% - 64px)` }}
+        className="absolute bottom-20 w-36 h-36"
+        style={{ left: `calc(${gameState.characterPosition}% - 72px)` }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
@@ -108,43 +108,45 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute -bottom-2 left-[100%] transform -translate-x-1/2 w-16 h-16 object-contain"
+          className="absolute -bottom-0 left-[100%] transform -translate-x-1/2 w-20 h-20 object-contain"
         />
       </motion.div>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-        <button
-          onClick={() => onMove('left')}
-          className="w-12 h-12 hover:opacity-80 transition-opacity"
-        >
-          <img 
-            src="/Left.png" 
-            alt="move left"
-            className="w-full h-full object-contain"
-          />
-        </button>
-        <button
-          onClick={() => onMove('right')}
-          className="w-12 h-12 hover:opacity-80 transition-opacity"
-        >
-          <img 
-            src="/Right.png" 
-            alt="move right"
-            className="w-full h-full object-contain"
-          />
-        </button>
-      </div>
+      {!gameState.isGameOver && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+          <button
+            onClick={() => onMove('left')}
+            className="w-12 h-12 hover:opacity-80 transition-opacity"
+          >
+            <img 
+              src="/Left.png" 
+              alt="move left"
+              className="w-full h-full object-contain"
+            />
+          </button>
+          <button
+            onClick={() => onMove('right')}
+            className="w-12 h-12 hover:opacity-80 transition-opacity"
+          >
+            <img 
+              src="/Right.png" 
+              alt="move right"
+              className="w-full h-full object-contain"
+            />
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {gameState.isGameOver && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative"
+              className="relative w-[300px]"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -153,16 +155,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
               <img 
                 src="/Message.png" 
                 alt="You won!"
-                className="w-64 h-64 object-contain"
+                className="w-full h-full object-contain"
               />
-              <button
-                onClick={() => gameState.resetGame?.()}
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 
-                           bg-white/20 hover:bg-white/30 transition-colors backdrop-blur-sm
-                           rounded-full text-white font-semibold"
-              >
-                Play Again
-              </button>
             </motion.div>
           </motion.div>
         )}

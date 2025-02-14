@@ -36,37 +36,45 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
   const [gameState, setGameState] = useState<GameState>({
     score: 0,
     isGameOver: false,
-    characterPosition: 50, // percentage
+    characterPosition: 50,
     raindrops: [],
     gameAssets: { ...DEFAULT_ASSETS, ...customAssets },
   });
 
   const moveCharacter = useCallback((direction: 'left' | 'right') => {
     setGameState(prev => {
+      if (prev.isGameOver) return prev;
+
       const newPosition = direction === 'left' 
-        ? Math.max(0, prev.characterPosition - 5)
-        : Math.min(100, prev.characterPosition + 5);
+        ? Math.max(10, prev.characterPosition - 5)
+        : Math.min(90, prev.characterPosition + 5);
       
       return { ...prev, characterPosition: newPosition };
     });
   }, []);
 
   const createRaindrop = useCallback(() => {
-    const newRaindrop: Raindrop = {
-      id: Date.now(),
-      x: Math.random() * 100,
-      y: -5,
-      speed: 1 + Math.random() * 1, // Reduced from 2 + Math.random() * 2
-    };
+    setGameState(prev => {
+      if (prev.isGameOver) return prev;
 
-    setGameState(prev => ({
-      ...prev,
-      raindrops: [...prev.raindrops, newRaindrop],
-    }));
+      const newRaindrop: Raindrop = {
+        id: Date.now(),
+        x: Math.random() * 100,
+        y: -5,
+        speed: 1 + Math.random() * 1,
+      };
+
+      return {
+        ...prev,
+        raindrops: [...prev.raindrops, newRaindrop],
+      };
+    });
   }, []);
 
   const updateRaindrops = useCallback(() => {
     setGameState(prev => {
+      if (prev.isGameOver) return prev;
+
       const updatedRaindrops = prev.raindrops
         .map(drop => ({ ...drop, y: drop.y + drop.speed }))
         .filter(drop => drop.y < 100);
@@ -109,19 +117,11 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
     }));
   }, []);
 
-  const updateAssets = useCallback((newAssets: Partial<GameAssets>) => {
-    setGameState(prev => ({
-      ...prev,
-      gameAssets: { ...prev.gameAssets, ...newAssets },
-    }));
-  }, []);
-
   return {
     gameState,
     moveCharacter,
     createRaindrop,
     updateRaindrops,
     resetGame,
-    updateAssets,
   };
 };
