@@ -6,7 +6,7 @@ interface ScoreDisplayProps {
 }
 
 export const ScoreDisplay = ({ score }: ScoreDisplayProps) => {
-  return (
+  return score > 0 ? (
     <motion.div
       className="fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full
                  bg-white/10 backdrop-blur-md shadow-lg border border-white/20"
@@ -16,5 +16,5 @@ export const ScoreDisplay = ({ score }: ScoreDisplayProps) => {
     >
       <span className="text-xl font-semibold">Score: {score}</span>
     </motion.div>
-  );
+  ) : null;
 };

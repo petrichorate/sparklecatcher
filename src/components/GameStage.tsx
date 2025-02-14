@@ -42,8 +42,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
           <motion.div
             key={index}
             className="w-6 h-6"
-            initial={{ opacity: 0.2 }}
-            animate={{ opacity: index < gameState.score ? 1 : 0.2 }}
+            initial={{ opacity: 0.3 }}
+            animate={{ opacity: index < gameState.score ? 1 : 0.3 }}
             transition={{ duration: 0.2 }}
           >
             <img 
@@ -83,7 +83,10 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
             exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, exit: { duration: 0 } }}
+            transition={{ 
+              duration: 0.3, 
+              exit: { duration: 0.15 } // 50% faster exit animation
+            }}
           >
             <img 
               src={gameState.gameAssets.raindrop} 
