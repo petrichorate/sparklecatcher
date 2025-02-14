@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameState, Raindrop } from '@/hooks/useGameState';
@@ -107,7 +108,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute bottom-0 left-[80%] transform -translate-x-1/2 w-16 h-16 object-contain"
+          className="absolute bottom-0 left-[100%] transform -translate-x-1/2 w-16 h-16 object-contain"
         />
       </motion.div>
 

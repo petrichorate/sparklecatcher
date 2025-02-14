@@ -18,9 +18,9 @@ const Index = () => {
     resetGame,
   } = useGameState({
     background: '/placeholder.svg',
-    character: '/lovable-uploads/77a2d4c1-c13c-433b-9c85-0d70ab9ea60b.png',
-    basket: '/lovable-uploads/a7232ff0-2627-4d2e-ba28-8383746727fd.png',
-    raindrop: '/lovable-uploads/0e16bf6e-d316-4391-8fc3-51b1c509fe4c.png',
+    character: '/Mouse.png',
+    basket: '/Basket.png',
+    raindrop: '/Sparkle.png',
     winScreen: '/placeholder.svg',
   });
 
