@@ -1,7 +1,5 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'sonner';
 import { GameState, Raindrop } from '@/hooks/useGameState';
 
 interface GameStageProps {
@@ -72,7 +70,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
     >
       {renderRaindropCounter()}
 
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         {gameState.raindrops.map((drop: Raindrop) => (
           <motion.div
             key={drop.id}
@@ -83,7 +81,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
             }}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
-            exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
+            exit={{ opacity: 0, scale: 0, transition: { duration: 0.05 } }}
             transition={{ duration: 0.3 }}
           >
             <img 
