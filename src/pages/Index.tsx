@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 import { useGameState } from '@/hooks/useGameState';
 import { GameStage } from '@/components/GameStage';
 import { ScoreDisplay } from '@/components/ScoreDisplay';
-import { WinScreen } from '@/components/WinScreen';
 
 const RAINDROP_INTERVAL = 2000; // 2 seconds
 const GAME_TICK = 50; // 50ms
@@ -21,7 +20,7 @@ const Index = () => {
     character: '/Mouse.png',
     basket: '/Basket.png',
     raindrop: '/Sparkle.png',
-    winScreen: '/placeholder.svg',
+    winScreen: '/Message.png',
   });
 
   useEffect(() => {
@@ -43,15 +42,6 @@ const Index = () => {
           gameState={gameState}
           onMove={moveCharacter}
         />
-
-        <AnimatePresence>
-          {gameState.isGameOver && (
-            <WinScreen
-              onRestart={resetGame}
-              winScreenImage={gameState.gameAssets.winScreen}
-            />
-          )}
-        </AnimatePresence>
       </div>
     </div>
   );
