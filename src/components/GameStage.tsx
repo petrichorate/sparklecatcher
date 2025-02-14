@@ -82,8 +82,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
             }}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
-            exit={{ opacity: 0, scale: 0, transition: { duration: 0 } }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, exit: { duration: 0 } }}
           >
             <img 
               src={gameState.gameAssets.raindrop} 
@@ -108,7 +108,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute -bottom-0 left-[100%] transform -translate-x-1/2 w-20 h-20 object-contain"
+          className="absolute -bottom-1 left-[100%] transform -translate-x-1/2 w-20 h-20 object-contain"
         />
       </motion.div>
 
@@ -146,7 +146,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative w-[300px]"
+              className="relative w-[400px]"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}

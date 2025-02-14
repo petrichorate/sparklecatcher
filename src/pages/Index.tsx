@@ -16,7 +16,7 @@ const Index = () => {
     updateRaindrops,
     resetGame,
   } = useGameState({
-    background: '/placeholder.svg',
+    background: '/Background.png',
     character: '/Mouse.png',
     basket: '/Basket.png',
     raindrop: '/Sparkle.png',
