@@ -76,33 +76,37 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
       if (prev.isGameOver) return prev;
 
       const updatedRaindrops = prev.raindrops
-        .map(drop => ({ ...drop, y: drop.y + drop.speed }))
-        .filter(drop => drop.y < 100);
+        .map(drop => ({ ...drop, y: drop.y + drop.speed }));
 
-      const catchCheck = updatedRaindrops.find(drop => {
+      const remainingDrops: Raindrop[] = [];
+      let scoreIncrement = 0;
+
+      updatedRaindrops.forEach(drop => {
         const basketPosition = prev.characterPosition + 8;
         const isInBasketXRange = Math.abs(drop.x - basketPosition) < 8;
-        const isInBasketYRange = drop.y > 75 && drop.y < 85;
+        const isInBasketYRange = drop.y >= 75 && drop.y <= 80; // Narrower range for more precise catching
+        const isBelowScreen = drop.y >= 100;
         
-        const caught = isInBasketXRange && isInBasketYRange;
-        return caught;
+        if (isInBasketXRange && isInBasketYRange) {
+          scoreIncrement++;
+        } else if (!isBelowScreen) {
+          remainingDrops.push(drop);
+        }
       });
 
-      if (catchCheck) {
-        const newScore = prev.score + 1;
-        const remainingDrops = updatedRaindrops.filter(d => d.id !== catchCheck.id);
-        
+      if (scoreIncrement > 0) {
+        const newScore = prev.score + scoreIncrement;
         return {
           ...prev,
           score: newScore,
-          isGameOver: newScore === 5,
+          isGameOver: newScore >= 5,
           raindrops: remainingDrops,
         };
       }
 
       return {
         ...prev,
-        raindrops: updatedRaindrops,
+        raindrops: remainingDrops,
       };
     });
   }, []);
