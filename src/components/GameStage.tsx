@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameState, Raindrop } from '@/hooks/useGameState';
@@ -6,9 +5,10 @@ import { GameState, Raindrop } from '@/hooks/useGameState';
 interface GameStageProps {
   gameState: GameState;
   onMove: (direction: 'left' | 'right') => void;
+  onReset: () => void;
 }
 
-export const GameStage = ({ gameState, onMove }: GameStageProps) => {
+export const GameStage = ({ gameState, onMove, onReset }: GameStageProps) => {
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -84,8 +84,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
             animate={{ y: `${drop.y}vh`, opacity: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             transition={{ 
-              duration: 0.3, 
-              exit: { duration: 0.05 }
+              duration: 0.05,
+              exit: { duration: 0.01 }
             }}
           >
             <img 
@@ -98,8 +98,8 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       </AnimatePresence>
 
       <motion.div
-        className="absolute bottom-20 w-36 h-36"
-        style={{ left: `calc(${gameState.characterPosition}% - 72px)` }}
+        className="absolute bottom-20 w-48 h-48"
+        style={{ left: `calc(${gameState.characterPosition}% - 96px)` }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
@@ -111,7 +111,7 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
         <img 
           src={gameState.gameAssets.basket} 
           alt="basket"
-          className="absolute -bottom-1 left-[100%] transform -translate-x-1/2 w-20 h-20 object-contain"
+          className="absolute bottom-2 left-[95%] transform -translate-x-1/2 w-20 h-20 object-contain"
         />
       </motion.div>
 
@@ -143,24 +143,35 @@ export const GameStage = ({ gameState, onMove }: GameStageProps) => {
       <AnimatePresence>
         {gameState.isGameOver && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50"
+            className="fixed inset-0 flex items-center justify-center z-50 min-h-screen"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.div
-              className="relative w-[400px]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <img 
-                src="/Message.png" 
-                alt="You won!"
-                className="w-full h-full object-contain"
-              />
-            </motion.div>
+            <div className="relative flex items-center justify-center translate-y-[-15%]">
+              <motion.div
+                className="w-[400px]"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <img 
+                  src="/Message.png" 
+                  alt="You won!"
+                  className="w-full h-full object-contain"
+                />
+                <button
+                  onClick={onReset}
+                  className="absolute bottom-[20%] left-1/2 transform -translate-x-1/2 
+                          px-6 py-3 bg-white/20 hover:bg-white/30 
+                          transition-colors rounded-full text-white font-semibold 
+                          shadow-lg backdrop-blur-sm"
+                >
+                  Play Again
+                </button>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

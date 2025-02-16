@@ -18,18 +18,18 @@ export const WinScreen = ({ onRestart, winScreenImage }: WinScreenProps) => {
         className="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20
                    flex flex-col items-center gap-6 max-w-md mx-4"
         initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
+        animate={{ scale: 1.2, opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
         <img 
           src={winScreenImage} 
           alt="You won!"
-          className="w-64 h-64 object-contain rounded-lg"
+          className="w-80 h-80 object-contain rounded-lg"
         />
-        <h2 className="text-2xl font-bold text-white">Congratulations!</h2>
+        {/* <h2 className="text-2xl font-bold text-white">Congratulations!</h2>
         <p className="text-white/90 text-center">
           You've caught all the raindrops! Want to play again?
-        </p>
+        </p> */}
         <button
           onClick={onRestart}
           className="px-6 py-3 bg-white/20 hover:bg-white/30 transition-colors

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 
 export interface GameAssets {
@@ -83,8 +82,8 @@ export const useGameState = (customAssets?: Partial<GameAssets>) => {
 
       updatedRaindrops.forEach(drop => {
         const basketPosition = prev.characterPosition + 8;
-        const isInBasketXRange = Math.abs(drop.x - basketPosition) < 8;
-        const isInBasketYRange = drop.y >= 75 && drop.y <= 80; // Narrower range for more precise catching
+        const isInBasketXRange = Math.abs(drop.x - basketPosition) < 10;
+        const isInBasketYRange = drop.y >= 60 && drop.y <= 80;
         const isBelowScreen = drop.y >= 100;
         
         if (isInBasketXRange && isInBasketYRange) {
